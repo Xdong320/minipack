@@ -246,4 +246,8 @@ function bundle(graph) {
 const graph = createGraph('./example/entry.js');
 const result = bundle(graph);
 
-console.log(result);
+fs.writeFile('./main.js',result,(res)=>{
+  console.log("写入文件",res)
+})
+
+// console.log(result);

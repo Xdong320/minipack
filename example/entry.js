@@ -1,3 +1,3 @@
 import message from './message.js';
 
-console.log(message);
+console.log("messgsge=========>",message);
