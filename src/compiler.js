@@ -10,7 +10,9 @@
 const fs = require('fs')
 const path = require('path')
 const babylon = require('babylon')
-const traverse = require('traverse')
+const traverse = require('babel-traverse').default;
+const generator = require('generator')
+
 
 class Compiler {
     constructor(options) {
