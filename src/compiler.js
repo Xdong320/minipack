@@ -9,7 +9,9 @@
 
 const fs = require('fs')
 const path = require('path')
-const { parser } = require('ast-parser')
+const babylon = require('babylon')
+const traverse = require('traverse')
+
 class Compiler {
     constructor(options) {
         this.options = options || {}
@@ -51,7 +53,7 @@ class Compiler {
         };
 
         // 处理 require 语句，同时记录依赖了哪些文件
-        const ast = parser.parse(code, {
+        const ast = babylon.parse(code, {
             sourceType: "module",
             ast: true,
         });
