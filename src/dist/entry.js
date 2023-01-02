@@ -9,14 +9,19 @@
       module.exports = 'world';
     }
     ,
+    "src\\myname.js": (module, __unused_webpack_exports, __webpack_require__) => {
+      module.exports = 'minipack2';
+    }
+    ,
     "example\\message.js": (module, __unused_webpack_exports, __webpack_require__) => {
       // import { name } from './name.js';
 
       // export default `hello ${name}!`;
 
       const name = __webpack_require__("example\\name.js");
+      const myname = __webpack_require__("src\\myname.js");
 
-      module.exports = `hello ${name}!`;
+      module.exports = `hello ${name}!,my name is ${myname}`;
     }
 
   };

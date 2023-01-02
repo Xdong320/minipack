@@ -62,7 +62,7 @@ class Compiler {
     // 调用 webpack 处理依赖的代码
     dealDependencies(code, modulePath) {
 
-        const fullPath = path.relative(process.cwd(), modulePath);
+        const fullPath = path.relative(process.cwd(), modulePath).replace('\\', '\\\\');
         // 创建模块对象
         const module = {
             id: fullPath,
@@ -85,9 +85,12 @@ class Compiler {
                     const requirePath = node.arguments[0].value;
 
                     const moduleDirName = path.dirname(modulePath);
-                    // const fullPath = path.relative(path.join(moduleDirName, requirePath), requirePath);
-                    const fullPath = path.join(moduleDirName, requirePath)
-                    // const fullPath = requirePath
+                    //依赖的绝对路径
+                    const absolutePath = path.join(moduleDirName, requirePath)
+                    // 相对路径
+                    // const fullPath = path.relative(moduleDirName, absolutePath);
+
+                    const fullPath = path.relative(process.cwd(), absolutePath);
 
                     // 替换 require 语句为 webpack 自定义的 require 方法
                     const temp = {
@@ -103,7 +106,7 @@ class Compiler {
                         item.value = fullPath
                         return item
                     })
-                    node.arguments = p
+                    // node.arguments = p
 
                     const exitModule = [...this.modules].find(item => item.id === fullPath)
                     // 该文件可能已经被处理过，这里判断一下
@@ -158,7 +161,7 @@ class Compiler {
         ${entryChunk.modules.map(module => `
             "${module.id}": (module, __unused_webpack_exports, __webpack_require__) => {
             ${module._source}
-          }
+        }
         `).join(',')}
       };
 
